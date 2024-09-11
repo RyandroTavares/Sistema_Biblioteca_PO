@@ -11,9 +11,9 @@ public class SistemaBiblioteca {
             System.out.println(" ");
             System.out.println("1. Adicionar Livro");
             System.out.println("2. Listar Livros");
-            System.out.println("3. Ordenar por Título");
-            System.out.println("4. Ordenar por Autor");
-            System.out.println("5. Buscar Livro");
+            System.out.println("3. Ordenar Livros");
+            System.out.println("4. Buscar Livro");
+            System.out.println("5. Remover Livro por ID");
             System.out.println("6. Sair");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
@@ -53,31 +53,54 @@ public class SistemaBiblioteca {
                     break;
 
                 case 3:
-                    Ordenacao.bubbleSort(biblioteca.getAcervo(), biblioteca.getCount(), true);
-                    System.out.println("Livros ordenados por título.");
+                    System.out.println("1. Ordenar por Título");
+                    System.out.println("2. Ordenar por Autor");
+                    System.out.print("Escolha uma opção de ordenação: ");
+                    
+                    int ordenacaoOpcao = 0;
+                    boolean ordenacaoOpcaoValida = false;
+
+                    while (!ordenacaoOpcaoValida) {
+                        try {
+                            ordenacaoOpcao = scanner.nextInt();
+                            scanner.nextLine();
+                            if (ordenacaoOpcao == 1 || ordenacaoOpcao == 2) {
+                                ordenacaoOpcaoValida = true;
+                            } else {
+                                System.out.println("Opção inválida. Por favor, escolha 1 ou 2.");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                            scanner.nextLine();
+                        }
+                    }
+
+                    if (ordenacaoOpcao == 1) {
+                        Ordenacao.bubbleSort(biblioteca.getAcervo(), biblioteca.getCount(), true);
+                        System.out.println("Livros ordenados por título.");
+                    } else if (ordenacaoOpcao == 2) {
+                        Ordenacao.bubbleSort(biblioteca.getAcervo(), biblioteca.getCount(), false);
+                        System.out.println("Livros ordenados por autor.");
+                    }
                     break;
 
                 case 4:
-                    Ordenacao.bubbleSort(biblioteca.getAcervo(), biblioteca.getCount(), false);
-                    System.out.println("Livros ordenados por autor.");
-                    break;
-
-                case 5:
+                    System.out.println("1. Buscar por Título");
+                    System.out.println("2. Buscar por Autor");
+                    System.out.println("3. Buscar por ID");
+                    System.out.print("Escolha uma opção de busca: ");
+                    
                     int buscaOpcao = 0;
                     boolean buscaOpcaoValida = false;
 
                     while (!buscaOpcaoValida) {
-                        System.out.println("1. Buscar por Título");
-                        System.out.println("2. Buscar por Autor");
-                        System.out.print("Escolha uma opção de busca: ");
-                        
                         try {
                             buscaOpcao = scanner.nextInt();
                             scanner.nextLine();
-                            if (buscaOpcao == 1 || buscaOpcao == 2) {
+                            if (buscaOpcao == 1 || buscaOpcao == 2 || buscaOpcao == 3) {
                                 buscaOpcaoValida = true;
                             } else {
-                                System.out.println("Opção inválida. Por favor, escolha 1 ou 2.");
+                                System.out.println("Opção inválida. Por favor, escolha 1, 2 ou 3.");
                             }
                         } catch (InputMismatchException e) {
                             System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
@@ -96,10 +119,22 @@ public class SistemaBiblioteca {
                             String autorBusca = scanner.nextLine();
                             Ordenacao.buscaPorAutor(biblioteca.getAcervo(), biblioteca.getCount(), autorBusca);
                             break;
+                        case 3:
+                            System.out.print("Digite o ID do livro: ");
+                            int idBusca = scanner.nextInt();
+                            scanner.nextLine();
+                            Ordenacao.buscaPorId(biblioteca.getAcervo(), biblioteca.getCount(), idBusca);
+                            break;
                         default:
-                            // Não deveria chegar aqui, pois todas as opções são validadas no loop
                             System.out.println("Opção de busca inválida.");
                     }
+                    break;
+
+                case 5:
+                    System.out.print("Digite o ID do livro a ser removido: ");
+                    int id = scanner.nextInt();
+                    scanner.nextLine();
+                    biblioteca.removerLivroPorId(id);
                     break;
 
                 case 6:

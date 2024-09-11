@@ -13,7 +13,7 @@ public class Biblioteca {
         if (count < acervo.length) {
             acervo[count++] = livro;
         } else {
-            System.out.println("Acervo cheio!");
+            System.out.println("Acervo cheio! Não é possível adicionar mais livros.");
         }
     }
 
@@ -24,6 +24,25 @@ public class Biblioteca {
             for (int i = 0; i < count; i++) {
                 System.out.println(acervo[i]);
             }
+        }
+    }
+
+    public void removerLivroPorId(int id) {
+        int i;
+        for (i = 0; i < count; i++) {
+            if (acervo[i].getId() == id) {
+                break;
+            }
+        }
+
+        if (i < count) {
+            for (int j = i; j < count - 1; j++) {
+                acervo[j] = acervo[j + 1];
+            }
+            acervo[--count] = null;
+            System.out.println("Livro com ID " + id + " removido.");
+        } else {
+            System.out.println("Livro com ID " + id + " não encontrado.");
         }
     }
 

@@ -9,7 +9,9 @@ public class Ordenacao {
             for (int j = 0; j < count - i - 1; j++) {
                 Livro l1 = array[j];
                 Livro l2 = array[j + 1];
-                if (byTitle ? l1.titulo.compareToIgnoreCase(l2.titulo) > 0 : l1.autor.compareToIgnoreCase(l2.autor) > 0) {
+                boolean shouldSwap = byTitle ? l1.getTitulo().compareToIgnoreCase(l2.getTitulo()) > 0
+                                             : l1.getAutor().compareToIgnoreCase(l2.getAutor()) > 0;
+                if (shouldSwap) {
                     Livro temp = l1;
                     array[j] = l2;
                     array[j + 1] = temp;
@@ -24,7 +26,7 @@ public class Ordenacao {
         boolean encontrado = false;
         System.out.println("Buscando por título contendo: " + titulo);
         for (int i = 0; i < count; i++) {
-            if (array[i].titulo.toLowerCase().contains(titulo.toLowerCase())) {
+            if (array[i].getTitulo().toLowerCase().contains(titulo.toLowerCase())) {
                 if (!encontrado) {
                     System.out.println("Livros encontrados:");
                     encontrado = true;
@@ -41,7 +43,7 @@ public class Ordenacao {
         boolean encontrado = false;
         System.out.println("Buscando por autor contendo: " + autor);
         for (int i = 0; i < count; i++) {
-            if (array[i].autor.toLowerCase().contains(autor.toLowerCase())) {
+            if (array[i].getAutor().toLowerCase().contains(autor.toLowerCase())) {
                 if (!encontrado) {
                     System.out.println("Livros encontrados:");
                     encontrado = true;
@@ -51,6 +53,22 @@ public class Ordenacao {
         }
         if (!encontrado) {
             System.out.println("Nenhum livro encontrado com o autor contendo: " + autor);
+        }
+    }
+    
+    public static void buscaPorId(Livro[] array, int count, int id) {
+        boolean encontrado = false;
+        System.out.println("Buscando por ID: " + id);
+        for (int i = 0; i < count; i++) {
+            if (array[i].getId() == id) {
+                System.out.println("Livro encontrado:");
+                System.out.println(array[i]);
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Nenhum livro encontrado com o ID: " + id);
         }
     }
 }
